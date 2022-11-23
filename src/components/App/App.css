@@ -1,0 +1,26 @@
+/* CSS переменные */
+:root {
+  --accent-color-green: #2BE080;
+  --accent-color-pink: #FF3055;
+  --accent-color-blue: #3456F3;
+  
+  --text-black-color: #000000;
+  --text-grey-color: #A0A0A0;
+
+  --bg-color: #F5F5F5;
+  --item-color: #E8E8E8;
+}
+
+/* Общие настройки */
+*, *::after, *::before {
+  box-sizing: border-box;
+}
+
+.App {
+  font-family: 'Inter', Arial, sans-serif;
+  color: var(--text-black-color);
+  
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
