@@ -14,7 +14,7 @@ function AboutMe() {
                         <p className="about-me__text">
                         Я родилась и живу в Казани, заканчиваю КНИТУ-КАИ на специальность "Техник по информационным системам". У меня есть кот Барсик. Я люблю слушать музыку, а ещё увлекаюсь играми. Недавно начала кодить. После прохождения курса по веб-разработке, начала заниматься фриланс-заказами.
                         </p>
-                        <a href="https://github.com/nata-naumova" className="about-me__link">Github</a>
+                        <a href="https://github.com/nata-naumova" target="_blank" rel="noreferrer" className="about-me__link" >Github</a>
                     </div>
                     <div className="about-me__photo">
                         <img src={aboutMe} alt="Картинка с пинтереста" className="about-me__img" />

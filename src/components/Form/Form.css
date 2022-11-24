@@ -49,3 +49,22 @@
     color: #3456F3;
     margin-left: 6px;
 }
+
+@media screen and (max-width: 425px) {
+    .form {
+        margin: 0 30px;
+        padding-top: 56px;
+        padding-bottom: 30px;
+    }
+    .form__logo {
+        margin: 0 auto 10px;
+    }
+    .form__title {
+        margin-bottom: 30px;
+        text-align: center;
+    }
+    .form__subtitle, .form__link {
+        font-size: 12px;
+        line-height: 15px;
+    }
+}

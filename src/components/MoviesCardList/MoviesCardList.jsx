@@ -15,6 +15,7 @@ function MoviesCardList({cardsData}) {
                     />
                 ))}
             </ul>
+            
         </section>
     );
 }
