@@ -1,163 +1,163 @@
 .about {
-    padding: 128px 20px 110px;
+  padding: 128px 20px 110px;
 }
 .about__container {
-    max-width: 1140px;
-    width: 100%;
-    margin: 0 auto;
+  max-width: 1140px;
+  width: 100%;
+  margin: 0 auto;
 }
 
 .about__list {
-    list-style-type: none;
-    margin: 0;
-    padding-left: 0;
-    display: flex;
-    align-items: center;
-    gap: 50px;
+  list-style-type: none;
+  margin: 0;
+  padding-left: 0;
+  display: flex;
+  align-items: center;
+  gap: 50px;
 }
 .about__item {
-    margin-top: 70px;
-    margin-bottom: 110px;
+  margin-top: 70px;
+  margin-bottom: 110px;
 }
 .about__title {
-    margin: 0;
-    margin-bottom: 26px;
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 24px;
-    letter-spacing: -0.04em;
+  margin: 0;
+  margin-bottom: 26px;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: -0.04em;
 }
 .about-title {
-    margin: 0;
-    margin-bottom: 26px;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 22px;
-    letter-spacing: -0.04em;
+  margin: 0;
+  margin-bottom: 26px;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  letter-spacing: -0.04em;
 }
 .about__subtitle {
-    margin: 0;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 20px;
+  margin: 0;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
 }
 
 .about-progress {
-    display: flex;
-    width: 100%;
+  display: flex;
+  width: 100%;
 }
 .about-progress__container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
 }
 .about-progress__backend {
-    width: 20%;
+  width: 20%;
 }
 .about-progress__frontend {
-    flex-grow: 1;
+  flex-grow: 1;
 }
 
 .about-progress__duration {
-    width: 100%;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 17px;
-    text-align: center;
-    padding: 9px 5px;
+  width: 100%;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  padding: 9px 5px;
 }
 .about-progress__duration_backend {
-    background: var(--accent-color-green);
+  background: var(--accent-color-green);
 }
 .about-progress__duration_frontend {
-    background: #F2F2F2;
+  background: #f2f2f2;
 }
 
 .about-progress__title {
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 17px;
-    color: var(--text-grey-color);
-    text-align: center;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: var(--text-grey-color);
+  text-align: center;
 }
 
 .about__title {
-    margin: 0;
-    margin-bottom: 23px;
-    font-weight: 400;
-    font-size: 22px;
-    line-height: 27px;
-    letter-spacing: -0.04em;
-    color: var(--text-black-color);
+  margin: 0;
+  margin-bottom: 23px;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 27px;
+  letter-spacing: -0.04em;
+  color: var(--text-black-color);
 }
 
 .about__line {
-    display: block;
-    width: 100%;
-    height: 1px;
-    background: var(--text-black-color);
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: var(--text-black-color);
 }
 
 @media screen and (max-width: 768px) {
-    .about {
-        padding: 102px 50px 85px;
-    }
-    .about__list {
-        gap: 35px;
-    }
-    .about__item {
-        margin-bottom: 93px;
-    }
-    .about__title {
-        margin-bottom: 19px;
-    }
-    .about-title {
-        margin-bottom: 22px;
-    }
-    .about__subtitle {
-        font-size: 12px;
-        line-height: 18px;
-    }
+  .about {
+    padding: 102px 50px 85px;
+  }
+  .about__list {
+    gap: 35px;
+  }
+  .about__item {
+    margin-bottom: 93px;
+  }
+  .about__title {
+    margin-bottom: 19px;
+  }
+  .about-title {
+    margin-bottom: 22px;
+  }
+  .about__subtitle {
+    font-size: 12px;
+    line-height: 18px;
+  }
 }
 
 @media screen and (max-width: 425px) {
-    .about {
-        padding: 70px 18px;
-    }
-    .about__list {
-        flex-direction: column;
-        gap: 56px;
-        margin: 60px 0;
-    }
-    .about__item {
-        margin: 0;
-    }
-    .about__title {
-        margin-bottom: 28px;
-        font-size: 18px;
-        line-height: 22px;
-    }
-    .about-title {
-        margin-bottom: 16px;
-    }
-    .about__subtitle {
-        font-size: 11px;
-        line-height: 16px;
-    }
-    .about-progress__container {
-        gap: 10px;
-    }
-    .about-progress__duration {
-        font-size: 11px;
-        line-height: 13px;
-    }
-    .about-progress__backend {
-        width: 35%;
-    }
-    .about-progress__title {
-        font-weight: 400;
-        font-size: 11px;
-        line-height: 13px;
-    }
+  .about {
+    padding: 70px 18px;
+  }
+  .about__list {
+    flex-direction: column;
+    gap: 56px;
+    margin: 60px 0;
+  }
+  .about__item {
+    margin: 0;
+  }
+  .about__title {
+    margin-bottom: 28px;
+    font-size: 18px;
+    line-height: 22px;
+  }
+  .about-title {
+    margin-bottom: 16px;
+  }
+  .about__subtitle {
+    font-size: 11px;
+    line-height: 16px;
+  }
+  .about-progress__container {
+    gap: 10px;
+  }
+  .about-progress__duration {
+    font-size: 11px;
+    line-height: 13px;
+  }
+  .about-progress__backend {
+    width: 35%;
+  }
+  .about-progress__title {
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 13px;
+  }
 }

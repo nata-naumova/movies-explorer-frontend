@@ -1,37 +1,37 @@
 .navtab {
-    margin: 0;
-    padding-left: 0;
-    list-style-type: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
+  margin: 0;
+  padding-left: 0;
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
 
 .navtab__link {
-    cursor: pointer;
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 12px;
-    line-height: 16px;
-    color: #fff;
-    padding: 10px 17px;
-    background: var(--item-color);
-    border-radius: 10px;
-    transition: background 0.3s ease;
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  color: #fff;
+  padding: 10px 17px;
+  background: var(--item-color);
+  border-radius: 10px;
+  transition: background 0.3s ease;
 }
 .navtab__link:hover {
-    background: var(--accent-color-pink);
+  background: var(--accent-color-pink);
 }
 
 @media screen and (max-width: 425px) {
-    .navtab__item {
-        padding: 5px 12px;
-    }
-    .navtab__link {
-        font-size: 10px;
-        line-height: 16px;
-        padding: 5px 14px;
-        border-radius: 6px;
-    }
+  .navtab__item {
+    padding: 5px 12px;
+  }
+  .navtab__link {
+    font-size: 10px;
+    line-height: 16px;
+    padding: 5px 14px;
+    border-radius: 6px;
+  }
 }

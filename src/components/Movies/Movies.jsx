@@ -1,22 +1,41 @@
-import './Movies.css';
-import { useState } from 'react';
-import SearchForm from '../SearchForm/SearchForm';
-import MoviesCardList from '../MoviesCardList/MoviesCardList';
-import More from './More/More';
+import "./Movies.css";
+import { useState } from "react";
+import SearchForm from "../SearchForm/SearchForm";
+import MoviesCardList from "../MoviesCardList/MoviesCardList";
+import Preloader from "../Preloader/Preloader";
 
-function Movies({cardsData}) {
-
-    const [movies] = useState([...cardsData]);
-
-    return(
-        <main className="movies">
-            <div className="movies__container">
-                <SearchForm />
-                <MoviesCardList cardsData={movies} />
-                <More isVisible={movies.length > 0} />
-            </div>
-        </main>
-    );
+function Movies({
+  isLoading,
+  currentUser,
+  handleSearch,
+  savedMovies,
+  movieCards,
+  onSave,
+  onDelete,
+  durationSwitch,
+  handleMoreButton,
+  count,
+}) {
+  return (
+    <main className="movies">
+      <div className="movies__container">
+        <SearchForm
+          handleSearch={handleSearch}
+          durationSwitch={durationSwitch}
+        />
+        <Preloader isLoading={isLoading} />
+        <MoviesCardList
+          currentUser={currentUser}
+          movieCards={movieCards}
+          savedMovies={savedMovies}
+          onSave={onSave}
+          onDelete={onDelete}
+          handleMoreButton={handleMoreButton}
+          count={count}
+        />
+      </div>
+    </main>
+  );
 }
 
 export default Movies;

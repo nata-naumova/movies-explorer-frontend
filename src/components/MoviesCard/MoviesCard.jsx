@@ -1,46 +1,49 @@
-import { useState } from 'react';
-import './MoviesCard.css';
+import { useLocation } from "react-router-dom";
+import "./MoviesCard.css";
 
-function MoviesCard({ isFavourite, name, duration, image }) {
-    const [isAddFavourite, setIsAddFavourite] = useState(isFavourite);
+function MoviesCard({ card, savedMovies, onSave, onDelete }) {
+  const location = useLocation();
 
-    function converseDuration(value) {
-        let minutes;
-        const stringValue = String(value);
-        if(/\d*[1]$/.test(stringValue)) {
-            minutes = 'минута';
-        } else if(/\d*[2-4]$/.test(stringValue)) {
-            minutes = 'минуты';
-        } else if(/\d*[5-90]$/.test(stringValue)) {
-            minutes = 'минут';
-        } else {
-            minutes = '';
-        }
-        return minutes;
-    }
-    const stringDuration = converseDuration(duration);
-
-    function handleCard() {
-        setIsAddFavourite(!isAddFavourite);
-    }
-
-    return(
-        <li className="movies-card">
-            <article className="movies-card__item">
-                <a href='/' target="_blank">
-                    <img src={image} alt="Изображение фильма" className="movies-card__image" />
-                </a>
-                <div className="movies-card__text">
-                    <h3 className="movies-card__title">{name}</h3>
-                    <button
-                    className= {`movies-card__button ${isAddFavourite ? 'movies-card__button_type_saved' : 'movies-card__button_type_save'}`}
-                    onClick={handleCard}
-                    ></button>
-                </div>
-                <span className="movies-card__duration">{`${duration} ${stringDuration}`}</span>
-            </article>
-        </li>
-    );
+  return (
+    <li className="movies-card">
+      <article className="movies-card__item">
+        <a href={card.trailerLink} target="_blank" rel="noreferrer">
+          <img
+            src={
+              location.pathname === "/movies"
+                ? `https://api.nomoreparties.co/${card.image.url}`
+                : card.image
+            }
+            alt={card.nameRU}
+            className="movies-card__image"
+          />
+        </a>
+        <div className="movies-card__text">
+          <h3 className="movies-card__title">{card.nameRU}</h3>
+          <button
+            className={`movies-card__button ${
+              location.pathname === "/movies"
+                ? card.id && savedMovies.some((m) => m.movieId === card.id)
+                  ? "movies-card__button_type_saved"
+                  : "movies-card__button_type_save"
+                : "movies-card__button_type_saved"
+            }`}
+            onClick={() => {
+              if (location.pathname === "/movies") {
+                onSave(card);
+              }
+              if (location.pathname === "/saved-movies") {
+                onDelete(card);
+              }
+            }}
+          />
+        </div>
+        {/* 
+                    <span className="movies-card__duration">{`${Math.trunc(props.movie.duration / 60) > 0 ? `${Math.trunc(props.movie.duration / 60)}ч` : ''} ${props.movie.duration % 60}м`}</span>
+                */}
+      </article>
+    </li>
+  );
 }
 
 export default MoviesCard;

@@ -1,23 +1,45 @@
-import './MoviesCardList.css';
-import MoviesCard from '../MoviesCard/MoviesCard';
+import "./MoviesCardList.css";
+import MoviesCard from "../MoviesCard/MoviesCard";
+import More from "../Movies/More/More";
 
-function MoviesCardList({cardsData}) {
-    return(
-        <section className="movies-list">
-            <ul className="movies__list">
-                {cardsData.length === 0 ? <li className="movies__item-empty">Фильмов не найдено</li> : cardsData.map((film) => (
-                    <MoviesCard 
-                        key={film.id}
-                        isFavourite={film.isFavourite}
-                        name={film.name}
-                        duration={film.duration}
-                        image={film.image}
-                    />
-                ))}
-            </ul>
-            
-        </section>
-    );
+function MoviesCardList({
+  currentUser,
+  movieCards,
+  savedMovies,
+  onSave,
+  onDelete,
+  handleMoreButton,
+  count,
+}) {
+  return (
+    <section className="movies-list">
+      <ul className="movies__list">
+        {movieCards
+          .map((card, id) => {
+            return (
+              <MoviesCard
+                key={card.id ? card.id : id}
+                card={card}
+                isLiked={card.isLiked}
+                savedMovies={savedMovies}
+                currentUser={currentUser}
+                onSave={onSave}
+                onDelete={onDelete}
+              />
+            );
+          })
+          .slice(0, count)}
+      </ul>
+
+      {movieCards.length === 0 ? (
+        <p>Введите название фильма в поисковой строке</p>
+      ) : (
+        movieCards.length > count && (
+          <More handleMoreButton={handleMoreButton} />
+        )
+      )}
+    </section>
+  );
 }
 
 export default MoviesCardList;
