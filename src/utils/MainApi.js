@@ -1,5 +1,5 @@
 //const BASE_URL = "http://localhost:3000";
-const BASE_URL = "http://movies-explorer.nata.nomoredomains.icu";
+const BASE_URL = "https://api.movies-explorer.nata.nomoredomains.icu";
 
 const getJson = (response) => {
   if (response.ok) {
