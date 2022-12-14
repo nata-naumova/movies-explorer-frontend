@@ -1,7 +1,7 @@
-const BASE_URL = "https://api.nomoreparties.co/beatfilm-movies";
+import { MOVIE_URL } from "./constants";
 
 export const getMovies = () => {
-  return fetch(BASE_URL, {
+  return fetch(MOVIE_URL, {
     method: "GET",
     headers: {
       Accept: "application/json",

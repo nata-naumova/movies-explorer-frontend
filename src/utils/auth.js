@@ -1,5 +1,4 @@
-//export const BASE_URL = "http://localhost:3000";
-export const BASE_URL = "https://api.movies-explorer.nata.nomoredomains.icu";
+import { BASE_URL } from "./constants";
 
 /* Регистрация пользователя */
 export const register = (data) => {

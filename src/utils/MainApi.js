@@ -1,5 +1,4 @@
-//const BASE_URL = "http://localhost:3000";
-const BASE_URL = "https://api.movies-explorer.nata.nomoredomains.icu";
+import { BASE_URL } from "./constants";
 
 const getJson = (response) => {
   return response.ok ? response.json() : Promise.reject(response.status);

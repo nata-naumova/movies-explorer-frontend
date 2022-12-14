@@ -1,3 +1,7 @@
+//export const BASE_URL = "http://localhost:3000";
+const BASE_URL = "https://api.movies-explorer.nata.nomoredomains.icu";
+const MOVIE_URL = "https://api.nomoreparties.co/beatfilm-movies";
+
 const SUCCESSFUL_LOGIN = "Добро пожаловать";
 const SUCCESSFUL_REGISTER = "Вы успешно зарегистрировались!";
 const SUCCESSFUL_UPDATEPROFILE = "Данные успешно изменены!";
@@ -44,6 +48,8 @@ const ERROR_EMAIL = "Некорректый адрес почты.";
 const REGEX_NAME = "^[A-Za-zА-Яа-яЁё /s -]+$";
 
 export {
+  BASE_URL,
+  MOVIE_URL,
   SUCCESSFUL_REGISTER,
   SUCCESSFUL_LOGIN,
   SUCCESSFUL_UPDATEPROFILE,
