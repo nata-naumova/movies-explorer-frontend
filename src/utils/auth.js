@@ -66,10 +66,5 @@ export const updateUserInfo = (jwt, user) => {
 
 /* Проверка ответа */
 const getJson = (response) => {
-  if (response.ok) {
-    return response.json();
-  }
-  return console.log(
-    "Ошибка на сервере: " + response.status + " - " + response.statusText
-  );
+  return response.ok ? response.json() : Promise.reject(response.status);
 };

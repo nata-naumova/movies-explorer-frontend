@@ -1,46 +1,34 @@
 import "./Profile.css";
 import { useState, useContext, useEffect } from "react";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import { useFormValidation } from "../../hooks/useFormValidation";
+import { REGEX_NAME } from "../../utils/constants";
 
-function Profile({ handleLogout, handleUpdateUserInfo, message }) {
+function Profile({ handleLogout, handleUpdateUserInfo }) {
+  const { values, handleChange, errors, isValid, resetForm } =
+    useFormValidation();
   /* Подписка на контекст */
   const currentUser = useContext(CurrentUserContext);
   /* Перемменные состояния */
-  const [name, setName] = useState(currentUser.name);
-  const [email, setEmail] = useState(currentUser.email);
   const [status, setStatus] = useState(true);
 
-  function handleNameChange(event) {
-    setName(event.target.value);
-  }
-
-  function handleEmailChange(event) {
-    setEmail(event.target.value);
-  }
-
+  const validateStatus =
+    currentUser.name === values.name && currentUser.email === values.email;
   /* Передаем значения во внешний обработчик */
   function handleSubmit(event) {
     event.preventDefault();
-    handleUpdateUserInfo({
-      name: name,
-      email: email,
-    });
+    handleUpdateUserInfo(values);
   }
 
   useEffect(() => {
-    if (name !== currentUser.name || email !== currentUser.email) {
-      setStatus(false);
-    } else {
+    if (!isValid || validateStatus) {
       setStatus(true);
     }
-  }, [
-    handleNameChange,
-    handleEmailChange,
-    name,
-    email,
-    currentUser.name,
-    currentUser.email,
-  ]);
+  }, [isValid]);
+
+  useEffect(() => {
+    resetForm(currentUser, {}, true);
+  }, [currentUser, resetForm]);
 
   return (
     <main className="profile">
@@ -63,10 +51,12 @@ function Profile({ handleLogout, handleUpdateUserInfo, message }) {
               required
               minLength="2"
               maxLength="30"
-              defaultValue={currentUser.name}
-              onChange={handleNameChange}
+              defaultValue={values.name}
+              onChange={handleChange}
+              pattern={REGEX_NAME}
             />
           </label>
+          <span className="profile__error">{errors.name}</span>
           <label htmlFor="input-email" className="profile__label">
             <span className="profile__label-text">E-mail</span>
             <input
@@ -75,21 +65,21 @@ function Profile({ handleLogout, handleUpdateUserInfo, message }) {
               name="email"
               className="profile__input"
               required
-              defaultValue={currentUser.email}
-              onChange={handleEmailChange}
+              defaultValue={values.email}
+              onChange={handleChange}
             />
           </label>
+          <span className="profile__error">{errors.email}</span>
         </div>
         <div className="profile__buttons">
-          <span className="profile__error">{message}</span>
           <button
             type="submit"
             className={`${
-              status ? "profile__button profile__button-edit" : "profile__btn"
+              !isValid ? "profile__button profile__button-edit" : "profile__btn"
             }`}
             aria-label="Редактирование профиля"
-            disabled={status}
-          >{`${status ? "Редактировать" : "Сохранить"}`}</button>
+            disabled={!isValid}
+          >{`${!isValid ? "Редактировать" : "Сохранить"}`}</button>
           <button
             type="button"
             onClick={handleLogout}

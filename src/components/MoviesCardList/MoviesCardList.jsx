@@ -1,6 +1,7 @@
 import "./MoviesCardList.css";
 import MoviesCard from "../MoviesCard/MoviesCard";
 import More from "../Movies/More/More";
+import { SEARCH_NOTFOUND } from "../../utils/constants";
 
 function MoviesCardList({
   currentUser,
@@ -10,6 +11,7 @@ function MoviesCardList({
   onDelete,
   handleMoreButton,
   count,
+  submit,
 }) {
   return (
     <section className="movies-list">
@@ -31,8 +33,8 @@ function MoviesCardList({
           .slice(0, count)}
       </ul>
 
-      {movieCards.length === 0 ? (
-        <p>Введите название фильма в поисковой строке</p>
+      {submit && movieCards.length === 0 ? (
+        <p>{SEARCH_NOTFOUND}</p>
       ) : (
         movieCards.length > count && (
           <More handleMoreButton={handleMoreButton} />

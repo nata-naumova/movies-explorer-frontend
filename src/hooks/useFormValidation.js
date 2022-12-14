@@ -1,35 +1,35 @@
-import { useCallback, useState, useEffect } from "react";
+import { useCallback, useState } from "react";
+import isEmail from "validator/es/lib/isEmail";
+import { ERROR_NAME, ERROR_EMAIL } from "../utils/constants";
 
 export const useFormValidation = () => {
   const [values, setValues] = useState({});
   const [errors, setErrors] = useState({});
   const [isValid, setIsValid] = useState(false);
-  const [targetValue, setTargetValue] = useState("");
 
   const handleChange = (event) => {
     const target = event.target;
     const name = target.name;
     const value = target.value;
+
+    if (name === "name" && target.validity.patternMismatch) {
+      target.setCustomValidity(ERROR_NAME);
+    } else {
+      target.setCustomValidity("");
+    }
+
+    if (name === "email") {
+      if (!isEmail(value)) {
+        target.setCustomValidity(ERROR_EMAIL);
+      } else {
+        target.setCustomValidity("");
+      }
+    }
+
     setValues({ ...values, [name]: value });
     setErrors({ ...errors, [name]: target.validationMessage });
-    //setIsValid(target.closest("form").checkValidity());
-    setTargetValue(target);
+    setIsValid(target.closest("form").checkValidity());
   };
-
-  const validateEmail = (email) => {
-    return String(email)
-      .toLowerCase()
-      .match(
-        /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu
-      );
-  };
-
-  useEffect(() => {
-    setIsValid(
-      Boolean(values.email && validateEmail(values.email)) &&
-        targetValue.checkValidity()
-    );
-  }, [values, targetValue]);
 
   const resetForm = useCallback(
     (newValues = {}, newErrors = {}, newIsValid = false) => {

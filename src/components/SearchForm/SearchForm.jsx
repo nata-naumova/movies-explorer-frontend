@@ -2,25 +2,31 @@ import "./SearchForm.css";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
+import { SEARCH_EMPTY } from "../../utils/constants";
 
-function SearchForm({ handleSearch, durationSwitch }) {
+function SearchForm({ handleSearch, durationSwitch, setSubmit }) {
   const localStorageValue = localStorage.getItem("saveSearchValue");
-  const localChecked = localStorage.getItem("saveCheck");
 
   const location = useLocation();
-
-  const [checked, setChecked] = useState(localChecked ?? "0");
+  const [checked, setChecked] = useState(false);
   const [value, setValue] = useState(localStorageValue ?? "");
+  const [msg, setMsg] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setChecked("0");
-    handleSearch(value);
+    if (value !== "") {
+      setChecked(false);
+      handleSearch(value);
+      setMsg("");
+      setSubmit(true);
+    } else {
+      setMsg(SEARCH_EMPTY);
+    }
   };
 
   useEffect(() => {
     if (location.pathname === "/saved-movies") {
-      setChecked("0");
+      setChecked(false);
       handleSearch(value);
       setValue("");
     }
@@ -29,6 +35,8 @@ function SearchForm({ handleSearch, durationSwitch }) {
   useEffect(() => {
     if (location.pathname === "/movies") {
       localStorage.setItem("saveSearchValue", value);
+      localStorage.setItem("saveCheck", checked);
+    } else if (location.pathname === "/saved-movies") {
       localStorage.setItem("saveCheck", checked);
     }
   }, [value, checked]);
@@ -48,6 +56,7 @@ function SearchForm({ handleSearch, durationSwitch }) {
       <div className="search__container">
         <form
           className="search__form"
+          noValidate
           onSubmit={(event) => {
             handleSubmit(event);
           }}
@@ -59,13 +68,14 @@ function SearchForm({ handleSearch, durationSwitch }) {
             placeholder="Фильм"
             value={value}
             onChange={(e) => setValue(e.target.value)}
+            required
           />
-          <span className="search__error"></span>
+          <span className="search__error">{msg}</span>
           <button type="submit" className="search__button"></button>
         </form>
         <FilterCheckbox
-          setChecked={setChecked}
           checked={checked}
+          setChecked={setChecked}
           durationSwitch={durationSwitch}
         />
       </div>

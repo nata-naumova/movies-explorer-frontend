@@ -2,6 +2,7 @@ import "../Form/Form.css";
 import Logo from "../../images/logo.svg";
 import { Link } from "react-router-dom";
 import { useFormValidation } from "../../hooks/useFormValidation";
+import { REGEX_NAME } from "../../utils/constants";
 
 function Register({ onSubmit }) {
   const { values, handleChange, errors, isValid } = useFormValidation();
@@ -30,8 +31,10 @@ function Register({ onSubmit }) {
               placeholder="Имя"
               minLength="2"
               maxLength="30"
-              onChange={handleChange}
               required
+              onChange={handleChange}
+              value={values.name || ""}
+              pattern={REGEX_NAME}
             />
             <span className="form__error">{errors.name}</span>
           </label>
@@ -45,6 +48,7 @@ function Register({ onSubmit }) {
               minLength="2"
               maxLength="64"
               onChange={handleChange}
+              value={values.email || ""}
               required
             />
             <span className="form__error">{errors.email}</span>
@@ -59,6 +63,7 @@ function Register({ onSubmit }) {
               minLength="2"
               maxLength="40"
               onChange={handleChange}
+              value={values.password || ""}
               required
             />
             <span className="form__error">{errors.password}</span>

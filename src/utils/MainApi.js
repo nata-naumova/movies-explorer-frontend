@@ -2,12 +2,7 @@
 const BASE_URL = "https://api.movies-explorer.nata.nomoredomains.icu";
 
 const getJson = (response) => {
-  if (response.ok) {
-    return response.json();
-  }
-  return console.log(
-    "Ошибка на сервере: " + response.status + " - " + response.statusText
-  );
+  return response.ok ? response.json() : Promise.reject(response.status);
 };
 
 export const getMovies = (jwt) => {

@@ -8,6 +8,7 @@ function SavedMovies({
   movieCards,
   handleSearch,
   onDelete,
+  savedMovies,
   durationSwitch,
 }) {
   return (
@@ -18,7 +19,11 @@ function SavedMovies({
           durationSwitch={durationSwitch}
         />
         <Preloader isLoading={isLoading} />
-        <MoviesCardList movieCards={movieCards} onDelete={onDelete} />
+        <MoviesCardList
+          movieCards={movieCards}
+          savedMovies={savedMovies}
+          onDelete={onDelete}
+        />
       </div>
     </main>
   );

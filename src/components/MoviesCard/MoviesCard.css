@@ -46,8 +46,13 @@
 .movies-card__button_type_saved {
   background-image: url(../../images/icons/movie-like-active-icon.svg);
 }
-.movies-card__button_type_saved:hover {
+.movies-card__button_type_delete {
   background-image: url(../../images/icons/movie-delete-icon.svg);
+  opacity: 0;
+  transition: 0.3s opacity ease;
+}
+.movies-card__button_type_delete:hover {
+  opacity: 1;
 }
 
 .movies-card__duration {

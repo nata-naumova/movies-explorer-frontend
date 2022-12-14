@@ -42,16 +42,16 @@
 .filter__label::after {
   content: "";
   position: absolute;
-  right: 2px;
+  left: 2px;
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background: var(--accent-color-green);
+  background: var(--bg-color);
   transition: all 0.4s ease;
 }
 .filter__input:checked + .filter__label::after {
-  left: 2px;
-  background-color: var(--bg-color);
+  left: 18px;
+  background-color: var(--accent-color-green);
 }
 
 .filter__text {

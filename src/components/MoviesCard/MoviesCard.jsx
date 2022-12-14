@@ -1,9 +1,8 @@
-import { useLocation } from "react-router-dom";
 import "./MoviesCard.css";
+import { useLocation } from "react-router-dom";
 
 function MoviesCard({ card, savedMovies, onSave, onDelete }) {
   const location = useLocation();
-
   return (
     <li className="movies-card">
       <article className="movies-card__item">
@@ -26,7 +25,7 @@ function MoviesCard({ card, savedMovies, onSave, onDelete }) {
                 ? card.id && savedMovies.some((m) => m.movieId === card.id)
                   ? "movies-card__button_type_saved"
                   : "movies-card__button_type_save"
-                : "movies-card__button_type_saved"
+                : "movies-card__button_type_delete"
             }`}
             onClick={() => {
               if (location.pathname === "/movies") {
@@ -38,9 +37,11 @@ function MoviesCard({ card, savedMovies, onSave, onDelete }) {
             }}
           />
         </div>
-        {/* 
-                    <span className="movies-card__duration">{`${Math.trunc(props.movie.duration / 60) > 0 ? `${Math.trunc(props.movie.duration / 60)}ч` : ''} ${props.movie.duration % 60}м`}</span>
-                */}
+        <span className="movies-card__duration">{`${
+          Math.trunc(card.duration / 60) > 0
+            ? `${Math.trunc(card.duration / 60)}ч`
+            : ""
+        } ${card.duration % 60}м`}</span>
       </article>
     </li>
   );
