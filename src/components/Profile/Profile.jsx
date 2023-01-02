@@ -10,25 +10,22 @@ function Profile({ handleLogout, handleUpdateUserInfo }) {
   /* Подписка на контекст */
   const currentUser = useContext(CurrentUserContext);
   /* Перемменные состояния */
-  const [status, setStatus] = useState(true);
+  const [status, setStatus] = useState(false);
 
-  const validateStatus =
-    currentUser.name === values.name && currentUser.email === values.email;
   /* Передаем значения во внешний обработчик */
   function handleSubmit(event) {
     event.preventDefault();
-    handleUpdateUserInfo(values);
+    if (isValid) {
+      handleUpdateUserInfo(values);
+    }
   }
 
   useEffect(() => {
-    if (!isValid || validateStatus) {
-      setStatus(true);
-    }
-  }, [isValid]);
-
-  useEffect(() => {
-    resetForm(currentUser, {}, true);
-  }, [currentUser, resetForm]);
+    resetForm({
+      name: currentUser.name,
+      email: currentUser.email,
+    });
+  }, [currentUser]);
 
   return (
     <main className="profile">
@@ -79,7 +76,7 @@ function Profile({ handleLogout, handleUpdateUserInfo }) {
             }`}
             aria-label="Редактирование профиля"
             disabled={!isValid}
-          >{`${!isValid ? "Редактировать" : "Сохранить"}`}</button>
+          >{`${isValid ? "Сохранить" : "Редактировать"}`}</button>
           <button
             type="button"
             onClick={handleLogout}

@@ -1,19 +1,14 @@
 import "./FilterCheckbox.css";
 
-function FilterCheckbox({ checked, setChecked, durationSwitch }) {
-  const handleChange = () => {
-    setChecked(!checked);
-    durationSwitch(checked);
-  };
-
+function FilterCheckbox({ value, onChange }) {
   return (
     <div className="filter">
       <input
         id="filter"
         type="checkbox"
         className="filter__input"
-        checked={checked}
-        onChange={handleChange}
+        checked={value}
+        onChange={onChange}
       />
       <label htmlFor="filter" className="filter__label"></label>
       <span className="filter__text">Короткометражки</span>

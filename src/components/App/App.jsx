@@ -1,13 +1,6 @@
 import "./App.css";
 import { useState, useEffect } from "react";
-import {
-  Routes,
-  Route,
-  useNavigate,
-  Navigate,
-  useLocation,
-} from "react-router-dom";
-import useLookWindowSize from "../../hooks/useLookWindowSize";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 
 // Компоненты
 import Header from "../Header/Header.jsx";
@@ -37,13 +30,6 @@ import {
   ERROR_REGISTER,
   ERROR_UPDATEUSER,
   SEARCH_ERRORMOVIES,
-  COLUMN_L,
-  COLUMN_M,
-  COLUMN_S,
-  ROW_L,
-  ROW_M,
-  ROW_S,
-  DURATION_MOVIE,
   SEARCH_ERRORSAVEDMOVIES,
 } from "../../utils/constants";
 
@@ -53,19 +39,11 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  const [count, setCount] = useState(0);
-  const [number, setNumber] = useState(0);
-  const { width } = useLookWindowSize();
-
   const [infoTooltip, setInfoTooltip] = useState(false);
   const [popupText, setPopupText] = useState("");
 
   const [localData, setLocalData] = useState([]);
   const [localSavedData, setLocalSavedData] = useState([]);
-
-  const [savedMoviesFilter, setSavedMoviesFilter] = useState([]);
-  const [filteredMovies, setFilteredMovies] = useState([]);
-
   const jwt = localStorage.getItem("jwt");
   const navigate = useNavigate();
   const location = useLocation();
@@ -118,6 +96,7 @@ function App() {
       .updateUserInfo(jwt, user)
       .then((user) => {
         setCurrentUser(user);
+        console.log(user);
       })
       .then(() => {
         setPopupText(SUCCESSFUL_UPDATEPROFILE);
@@ -135,12 +114,8 @@ function App() {
   /* Выходим из аккаунта */
   function handleLogout() {
     localStorage.clear();
-    localStorage.removeItem("savedMovies");
-    localStorage.removeItem("data");
     setCurrentUser(null);
     setLoggedIn(false);
-    setSavedMoviesFilter([]);
-    setFilteredMovies([]);
     setLocalSavedData([]);
     setPopupText("");
     navigate("/");
@@ -153,7 +128,8 @@ function App() {
         .checkToken(jwt)
         .then((res) => {
           setLoggedIn(true);
-          navigate("/movies");
+          setCurrentUser(res);
+          navigate(location);
         })
         .catch((err) => {
           console.log(`${err}: ${ERROR_TOKEN}`);
@@ -165,12 +141,6 @@ function App() {
   useEffect(() => {
     handleCheckToken();
   }, []);
-
-  useEffect(() => {
-    if (loggedIn) {
-      navigate("/movies");
-    }
-  }, [loggedIn]);
 
   /* Получаем информацию о пользователе */
   useEffect(() => {
@@ -192,8 +162,8 @@ function App() {
     if (jwt) {
       MoviesApi.getMovies()
         .then((result) => {
-          localStorage.setItem("data", JSON.stringify(result));
-          const allMovies = JSON.parse(localStorage.getItem("data"));
+          localStorage.setItem("moviesApi", JSON.stringify(result));
+          const allMovies = JSON.parse(localStorage.getItem("moviesApi"));
           setLocalData(allMovies);
         })
         .catch((error) => {
@@ -202,20 +172,6 @@ function App() {
         .finally(() => setIsLoading(false));
     }
   }, [jwt]);
-
-  /* Отображаем кол-во карточек */
-  useEffect(() => {
-    if (width >= 1280) {
-      setCount(COLUMN_L);
-      setNumber(ROW_L);
-    } else if (width >= 768 && width <= 1279) {
-      setCount(COLUMN_M);
-      setNumber(ROW_M);
-    } else if (width <= 320 && width <= 468) {
-      setCount(COLUMN_S);
-      setNumber(ROW_S);
-    }
-  }, [width]);
 
   /* Получаем список сохраненных фильмов */
   useEffect(() => {
@@ -252,74 +208,9 @@ function App() {
   /* Удаляем фильм */
   function handleDeleteMovie(card) {
     MainApi.deleteMovie(card, jwt).then(() => {
-      setSavedMoviesFilter(savedMoviesFilter.filter((i) => i._id !== card._id));
+      //setSavedMoviesFilter(savedMoviesFilter.filter((i) => i._id !== card._id));
       setLocalSavedData(localSavedData.filter((i) => i._id !== card._id));
     });
-  }
-
-  /* Поиск - Список найденых по слову фильмов */
-  function handleSearch(value) {
-    const sortedMovieSearch = localData.filter((item) => {
-      const values = value.toLowerCase();
-      const nameRU = item.nameRU.toLowerCase();
-      const nameEN = item.nameEN;
-      return (nameEN &&
-        nameEN.toLowerCase().includes(values) &&
-        values !== "") ||
-        (nameRU && nameRU.toLowerCase().includes(values) && value !== "")
-        ? item
-        : null;
-    });
-    localStorage.setItem("filtered", JSON.stringify(sortedMovieSearch));
-    setFilteredMovies(sortedMovieSearch);
-  }
-
-  /* Список сохраненных фильмов  */
-  function handleSavedMoviesSearch(value) {
-    const sortedMovieSearch = localSavedData.filter((card) => {
-      const values = value.toLowerCase();
-      const nameEN = card.nameEN;
-      const nameRU = card.nameRU.toLowerCase();
-      return (nameEN && nameEN.toLowerCase().includes(values)) ||
-        (nameRU && nameRU.toLowerCase().includes(value))
-        ? card
-        : null;
-    });
-    localStorage.setItem("savedFilter", JSON.stringify(sortedMovieSearch));
-    setSavedMoviesFilter(
-      sortedMovieSearch.length !== 0 ? sortedMovieSearch : localSavedData
-    );
-  }
-
-  /* Фильтр поиска по длительности фильмов */
-  const durationSwitch = (saveCheck) => {
-    const filterMovies = JSON.parse(localStorage.getItem("filtered"));
-    if (saveCheck && filterMovies) {
-      const shorts = filterMovies.filter(
-        (item) => item.duration <= DURATION_MOVIE
-      );
-      setFilteredMovies(shorts);
-    } else {
-      setFilteredMovies(filterMovies);
-    }
-  };
-
-  /* Фильтр поиска по длительности сохраненных фильмов */
-  function savedDurationSwitch(saveCheck) {
-    const savedFiltered = JSON.parse(localStorage.getItem("savedFilter"));
-    if (saveCheck && savedFiltered) {
-      const shorts = savedFiltered.filter(
-        (item) => item.duration <= DURATION_MOVIE
-      );
-      setSavedMoviesFilter(shorts);
-    } else {
-      setSavedMoviesFilter(savedFiltered);
-    }
-  }
-
-  /* Кнопка "Еще" */
-  function handleMoreButton() {
-    setCount(count + number);
   }
 
   /* Модальные окна */
@@ -363,14 +254,9 @@ function App() {
                 <Movies
                   isLoading={isLoading}
                   currentUser={currentUser}
-                  handleSearch={handleSearch}
                   savedMovies={localSavedData}
-                  movieCards={filteredMovies}
                   onSave={handleSaveMovie}
                   onDelete={handleDeleteMovie}
-                  durationSwitch={durationSwitch}
-                  handleMoreButton={handleMoreButton}
-                  count={count}
                 />
               </ProtectedRoute>
             }
@@ -382,11 +268,8 @@ function App() {
               <ProtectedRoute loggedIn={loggedIn}>
                 <SavedMovies
                   isLoading={isLoading}
-                  movieCards={savedMoviesFilter}
-                  handleSearch={handleSavedMoviesSearch}
                   onDelete={handleDeleteMovie}
-                  savedMovies={savedMoviesFilter}
-                  durationSwitch={savedDurationSwitch}
+                  savedMovies={localSavedData}
                 />
               </ProtectedRoute>
             }
