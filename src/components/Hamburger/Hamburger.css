@@ -1,0 +1,28 @@
+.hamburger {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+.hamburger__icon {
+  width: 32px;
+  height: 32px;
+  background-image: url(../../images/icons/hamburger-icon.svg);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  transition: 0.3s transform ease;
+}
+.hamburger__icon_active {
+  background-image: url(../../images/icons/hamburger-icon-close.svg);
+  transform: rotate(90deg);
+}
+
+@media screen and (max-width: 768px) {
+  .hamburger {
+    display: flex;
+    margin-left: auto;
+  }
+  .hamburger__icon {
+    z-index: 566;
+  }
+}
